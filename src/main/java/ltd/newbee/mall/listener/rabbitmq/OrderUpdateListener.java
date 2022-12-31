@@ -49,9 +49,6 @@ public class OrderUpdateListener {
                 }
             }
             logger.info("订单号为" + order.getOrderNo() + "的订单由未支付状态转为已支付状态");
-            //正常消费消息手动应答
-            //第一个参数表示回应信息类型，第二个参数表示是否批量确认
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("订单号为" + order.getOrderNo() + "的订单转换支付状态失败，原因：数据库存在异常");
@@ -71,9 +68,6 @@ public class OrderUpdateListener {
                 //若为已支付订单则进行退款标记
                 newBeeMallOrderService.refund(order.getOrderNo(), null);
             }
-            //消费消息异常
-            //前两个参数同上，第三个参数表示是否将消息重新入队，是则为true
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
         }
     }

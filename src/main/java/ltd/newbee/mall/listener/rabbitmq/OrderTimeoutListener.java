@@ -59,15 +59,9 @@ public class OrderTimeoutListener {
             int row = newBeeMallOrderMapper.deleteByPrimaryKeyWhenTimeout(order.getOrderId());
             if(row < 1) throw new NewBeeMallException(ServiceResultEnum.DB_ERROR.getResult());
             logger.info("订单号为" + order.getOrderNo() + "的超时订单关闭成功");
-            //正常消费消息手动应答
-            //第一个参数表示回应信息类型，第二个参数表示是否批量确认
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         }catch (Exception e){
             e.printStackTrace();
             logger.error("订单号为" + orderNo + "的超时订单关闭失败，原因：数据库存在异常");
-            //消费消息异常
-            //前两个参数同上，第三个参数表示是否将消息重新入队，是则为true
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             throw e;
         }
     }

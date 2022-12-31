@@ -28,7 +28,3 @@ spring:
     port: 5672
     username: guest
     password: guest
-    listener:
-      simple:
-        acknowledge-mode: manual
-        prefetch: 1 #每次从队列取一个，轮询分发
