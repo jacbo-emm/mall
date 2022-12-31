@@ -66,7 +66,7 @@ public class OrderTimeoutListener {
             e.printStackTrace();
             logger.error("订单号为" + orderNo + "的超时订单关闭失败，原因：数据库存在异常");
             //消费消息异常
-            //前两个参数同上，第三个参数表示是否重发消息，是则为true
+            //前两个参数同上，第三个参数表示是否将消息重新入队，是则为true
             channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
             throw e;
         }
