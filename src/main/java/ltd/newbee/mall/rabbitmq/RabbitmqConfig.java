@@ -12,15 +12,15 @@ public class RabbitmqConfig {
     //订单增删改队列
     @Bean
     public Queue orderInsertQueue(){
-        return new Queue(RabbitmqConstant.ORDER_INSERT_QUEUE);
+        return new Queue(RabbitmqConstant.ORDER_INSERT_QUEUE,true);
     }
     @Bean
     public Queue orderDeleteQueue(){
-        return new Queue(RabbitmqConstant.ORDER_DELETE_QUEUE);
+        return new Queue(RabbitmqConstant.ORDER_DELETE_QUEUE,true);
     }
     @Bean
     public Queue orderUpdateQueue(){
-        return new Queue(RabbitmqConstant.ORDER_UPDATE_QUEUE);
+        return new Queue(RabbitmqConstant.ORDER_UPDATE_QUEUE,true);
     }
 
     //订单交换机
