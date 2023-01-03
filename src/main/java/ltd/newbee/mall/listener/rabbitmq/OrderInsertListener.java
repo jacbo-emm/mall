@@ -37,6 +37,7 @@ public class OrderInsertListener {
     public void receiveInsertOrder(String orderInJson) throws IOException {
         NewBeeMallOrder order = JSON.parseObject(orderInJson, NewBeeMallOrder.class);
         try{
+            if(newBeeMallOrderMapper.selectByOrderNo(order.getOrderNo()) != null) return;
             int row = newBeeMallOrderMapper.insertSelective(order);
             if(row < 1) throw new NewBeeMallException(ServiceResultEnum.DB_ERROR.getResult());
             logger.info("订单号为" + order.getOrderNo() + "的订单插入成功");
