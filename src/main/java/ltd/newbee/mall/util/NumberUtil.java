@@ -1,5 +1,6 @@
 package ltd.newbee.mall.util;
 
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -54,6 +55,7 @@ public class NumberUtil {
         StringBuffer buffer = new StringBuffer(String.valueOf(System.currentTimeMillis()));
         int num = genRandomNum(4);
         buffer.append(num);
+        buffer.append(UUID.randomUUID().toString().substring(0,8));
         return buffer.toString();
     }
 }
