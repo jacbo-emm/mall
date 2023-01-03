@@ -157,7 +157,7 @@ public class OrderController {
         Long userId = mallUserVO.getUserId();
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
         //防止重复提交
-        if(alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo()) != null) throw new NewBeeMallException("请勿重复提交订单");
+        if(alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo()) != null) throw new NewBeeMallException("请勿重复提交付款申请");
         // 判断订单userId
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
