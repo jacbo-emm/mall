@@ -817,7 +817,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 );
     }
 
-    //将订单由已支付转为支付，用mq解耦更新过程
+    //将订单由未支付转为已支付，用mq解耦更新过程
     private void unpayToPayed(NewBeeMallOrder order){
         payedSave(order);
     }
