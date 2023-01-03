@@ -321,7 +321,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         // 生成订单号
         String orderNo = NumberUtil.genOrderNo();
         //防止插入重复订单
-        if(getOrderKeyByRedis(orderNo) != null) return "订单已存在，请勿重复插入";
+        if(getOrderKeyByRedis(orderNo) != null) NewBeeMallException.fail("订单已存在，切勿重复提交");
         //购物项id集合
         List<Long> itemIdList = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getCartItemId).collect(Collectors.toList());
         //商品id集合
