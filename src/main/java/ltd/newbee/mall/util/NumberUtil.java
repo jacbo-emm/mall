@@ -56,6 +56,7 @@ public class NumberUtil {
         int num = genRandomNum(4);
         buffer.append(num);
         buffer.append(UUID.randomUUID().toString().substring(0,8));
+        buffer.append((char)(Math.random() * 26 + 65));//A-Z
         return buffer.toString();
     }
 }
