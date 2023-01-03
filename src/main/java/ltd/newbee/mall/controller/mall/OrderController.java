@@ -156,8 +156,10 @@ public class OrderController {
         NewBeeMallUserVO mallUserVO = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Long userId = mallUserVO.getUserId();
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
-        //防止重复提交
-        if(alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo()) != null) throw new NewBeeMallException("请勿重复提交付款申请");
+        //防止重复付款
+        AlipayPayRecord alipayPayRecord = alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo());
+        if(alipayPayRecord != null && alipayPayRecord.getStatus() == 1) throw new NewBeeMallException("订单已付款");
+
         // 判断订单userId(好像多余了)
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
