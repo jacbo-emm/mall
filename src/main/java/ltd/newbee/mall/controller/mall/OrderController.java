@@ -156,6 +156,8 @@ public class OrderController {
         NewBeeMallUserVO mallUserVO = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Long userId = mallUserVO.getUserId();
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
+        //防止重复提交
+        if(alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo()) != null) throw new NewBeeMallException("请勿重复提交订单");
         // 判断订单userId
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
@@ -165,6 +167,7 @@ public class OrderController {
                 || newBeeMallOrder.getPayStatus() != PayStatusEnum.PAY_ING.getPayStatus()) {
             throw new NewBeeMallException("订单结算异常");
         }
+
         request.setAttribute("orderNo", orderNo);
         request.setAttribute("totalPrice", newBeeMallOrder.getTotalPrice());
         if (payType == 1) {
@@ -188,6 +191,7 @@ public class OrderController {
             // 必填
             // 商户订单号，需保证在商户端不重复
             String out_trade_no = newBeeMallOrder.getOrderNo() + new Random().nextInt(9999);
+
             // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
             String product_code = "FAST_INSTANT_TRADE_PAY";
             // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
@@ -203,6 +207,17 @@ public class OrderController {
                     + product_code + "\"," + "\"total_amount\":\"" + total_amount + "\"," + "\"subject\":\"" + subject
                     + "\"," + "\"body\":\"" + body + "\"}");
 
+            //将当前付款信息放到记录表中
+            AlipayPayRecord apr = new AlipayPayRecord();
+            apr.setOrderId(newBeeMallOrder.getOrderId());
+            apr.setOrderNo(newBeeMallOrder.getOrderNo());
+            apr.setOutTradeNo(out_trade_no);
+            apr.setProductCode(product_code);
+            apr.setTotalAmount(total_amount);
+            apr.setSubject(subject);
+            apr.setBody(body);
+            if(alipayPayRecordService.insertSelective(apr) < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+
             // 请求
             String form;
             try {
@@ -210,16 +225,6 @@ public class OrderController {
                 form = alipayClient.pageExecute(alipayRequest).getBody();//调用SDK生成表单
                 //表单封装到alipay.html模板中，产生一个实际页面进行支付宝付款请求
                 request.setAttribute("form", form);
-                //将当前付款信息放到记录表中
-                AlipayPayRecord apr = new AlipayPayRecord();
-                apr.setOrderId(newBeeMallOrder.getOrderId());
-                apr.setOrderNo(newBeeMallOrder.getOrderNo());
-                apr.setOutTradeNo(out_trade_no);
-                apr.setProductCode(product_code);
-                apr.setTotalAmount(total_amount);
-                apr.setSubject(subject);
-                apr.setBody(body);
-                if(alipayPayRecordService.insertSelective(apr) < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
             } catch (AlipayApiException e) {
                 e.printStackTrace();
             }

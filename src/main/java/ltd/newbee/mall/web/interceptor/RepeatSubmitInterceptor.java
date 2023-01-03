@@ -31,9 +31,9 @@ public class RepeatSubmitInterceptor implements HandlerInterceptor {
      */
     private static final String REPEAT_TIME = "repeatTime";
     /**
-     * 允许下一次请求的请求等待间隔
+     * 允许下一次请求的请求等待间隔(以秒为单位)
      */
-    private static final int REPEAT_TIME_INTERVAL = 5;
+    private static final int REPEAT_TIME_INTERVAL = 8;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) {
