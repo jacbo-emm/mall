@@ -156,8 +156,9 @@ public class OrderController {
         NewBeeMallUserVO mallUserVO = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Long userId = mallUserVO.getUserId();
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
-        //防止重复付款
+
         AlipayPayRecord alipayPayRecord = alipayPayRecordService.selectByOrderNo(newBeeMallOrder.getOrderNo());
+        //防止重复付款
         if(alipayPayRecord != null && alipayPayRecord.getStatus() == 1) throw new NewBeeMallException("订单已付款");
 
         // 判断订单userId(好像多余了)
@@ -189,36 +190,67 @@ public class OrderController {
             alipayRequest.setNotifyUrl(url + "/paySuccess?payType=1&orderNo=" + newBeeMallOrder.getOrderNo());
 
             // 填充业务参数
-
             // 必填
             // 商户订单号，需保证在商户端不重复
-            String out_trade_no = newBeeMallOrder.getOrderNo() + new Random().nextInt(9999);
+            String out_trade_no = "";
 
             // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
-            String product_code = "FAST_INSTANT_TRADE_PAY";
+            String product_code = "";
             // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
-            String total_amount = newBeeMallOrder.getTotalPrice() + "";
+            String total_amount = "";
             // 订单标题
-            String subject = "支付宝测试";
+            String subject = "";
 
             // 选填
             // 商品描述，可空
-            String body = "商品描述";
+            String body = "";
+
+            //将当前付款信息放到记录表中
+            //如果已经存在付款记录，则不添加
+            if(alipayPayRecord == null){
+                // 必填
+                // 商户订单号，需保证在商户端不重复
+                out_trade_no = newBeeMallOrder.getOrderNo() + new Random().nextInt(9999);
+
+                // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
+                product_code = "FAST_INSTANT_TRADE_PAY";
+                // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
+                total_amount = newBeeMallOrder.getTotalPrice() + "";
+                // 订单标题
+                subject = "支付宝测试";
+
+                // 选填
+                // 商品描述，可空
+                body = "商品描述";
+                AlipayPayRecord apr = new AlipayPayRecord();
+                apr.setOrderId(newBeeMallOrder.getOrderId());
+                apr.setOrderNo(newBeeMallOrder.getOrderNo());
+                apr.setOutTradeNo(out_trade_no);
+                apr.setProductCode(product_code);
+                apr.setTotalAmount(total_amount);
+                apr.setSubject(subject);
+                apr.setBody(body);
+                if(alipayPayRecordService.insertSelective(apr) < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+            }else{
+                // 必填
+                // 商户订单号，需保证在商户端不重复
+                out_trade_no = alipayPayRecord.getOutTradeNo();
+
+                // 销售产品码，与支付宝签约的产品码名称。目前仅支持FAST_INSTANT_TRADE_PAY
+                product_code = alipayPayRecord.getProductCode();
+                // 订单总金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000]。
+                total_amount = alipayPayRecord.getTotalAmount();
+                // 订单标题
+                subject = alipayPayRecord.getSubject();
+
+                // 选填
+                // 商品描述，可空
+                body = alipayPayRecord.getBody();
+            }
 
             alipayRequest.setBizContent("{" + "\"out_trade_no\":\"" + out_trade_no + "\"," + "\"product_code\":\""
                     + product_code + "\"," + "\"total_amount\":\"" + total_amount + "\"," + "\"subject\":\"" + subject
                     + "\"," + "\"body\":\"" + body + "\"}");
-
-            //将当前付款信息放到记录表中
-            AlipayPayRecord apr = new AlipayPayRecord();
-            apr.setOrderId(newBeeMallOrder.getOrderId());
-            apr.setOrderNo(newBeeMallOrder.getOrderNo());
-            apr.setOutTradeNo(out_trade_no);
-            apr.setProductCode(product_code);
-            apr.setTotalAmount(total_amount);
-            apr.setSubject(subject);
-            apr.setBody(body);
-            if(alipayPayRecordService.insertSelective(apr) < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
 
             // 请求
             String form;

@@ -61,7 +61,7 @@ public class RepeatSubmitInterceptor implements HandlerInterceptor {
                     long oldTime = (Long) oldData.get(REPEAT_TIME);
                     String oldParameterMap = (String) oldData.get(REPEAT_PARAMETERS);
                     if (parameterMap.equals(oldParameterMap) && (nowTime - oldTime) / 1000 < REPEAT_TIME_INTERVAL) {
-                        Result result = ResultGenerator.genFailResult("系统处理中，请稍候");
+                        Result result = ResultGenerator.genFailResult("请勿短时间内重复发起申请");
                         try {
                             response.setContentType("application/json");
                             response.setCharacterEncoding("utf-8");
