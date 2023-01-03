@@ -683,7 +683,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             if(newBeeMallOrder.getOrderStatus() == 1){
                 refund(newBeeMallOrder.getOrderNo(), null);
             }
-            return ServiceResultEnum.INSERT_ORDER_FAIL.getResult();
+            return "更新未支付订单为已支付订单失败";
         }
 //        if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) <= 0) {
 //            return ServiceResultEnum.DB_ERROR.getResult();
