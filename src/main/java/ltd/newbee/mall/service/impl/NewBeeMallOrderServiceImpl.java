@@ -720,7 +720,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 //BigDecimal特性，只能这样加
                 res = res.add(BigDecimal.valueOf(Double.valueOf(refundRecord.getRefundAmount())));
             }
-            if(res.compareTo(recordAmount) == 0) NewBeeMallException.fail("退款标记总额已满足付款额，请发起退款");
+            if(res.compareTo(recordAmount) == 0) NewBeeMallException.fail("退款标记总额已满足付款额，可以发起退款");
             else{
                 //如果传入值为null，表示退剩下的没退的部分的值
                 if(needRefundAmount == null){
