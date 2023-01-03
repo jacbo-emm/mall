@@ -328,6 +328,12 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
         //查找该购物车含有的所有商品信息
         List<NewBeeMallGoods> newBeeMallGoods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
+
+        //判断后续用来进行判断的购物项集合、商品id集合、商品集合是否为空
+        if (CollectionUtils.isEmpty(itemIdList) || CollectionUtils.isEmpty(goodsIds) || CollectionUtils.isEmpty(newBeeMallGoods)) {
+            NewBeeMallException.fail(ServiceResultEnum.ORDER_GENERATE_ERROR.getResult());
+        }
+
         // 检查是否包含已下架商品
         List<NewBeeMallGoods> goodsListNotSelling = newBeeMallGoods.stream()
                 .filter(newBeeMallGoodsTemp -> newBeeMallGoodsTemp.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
@@ -336,6 +342,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             // goodsListNotSelling 对象非空则表示有下架商品
             NewBeeMallException.fail(goodsListNotSelling.get(0).getGoodsName() + "已下架，无法生成订单");
         }
+
         //将某个商品取出其id，然后将id和其对应该商品封装成Map的一条数据，为了重新建立id-实体关联,方便提高查询速度
         Map<Long, NewBeeMallGoods> newBeeMallGoodsMap = newBeeMallGoods.stream().collect(Collectors.toMap(NewBeeMallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
         // 判断商品库存
@@ -348,10 +355,6 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             if (shoppingCartItemVO.getGoodsCount() > newBeeMallGoodsMap.get(shoppingCartItemVO.getGoodsId()).getStockNum()) {
                 NewBeeMallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
             }
-        }
-        //判断后续用来进行判断的购物项集合、商品id集合、商品集合是否为空
-        if (CollectionUtils.isEmpty(itemIdList) || CollectionUtils.isEmpty(goodsIds) || CollectionUtils.isEmpty(newBeeMallGoods)) {
-            NewBeeMallException.fail(ServiceResultEnum.ORDER_GENERATE_ERROR.getResult());
         }
         //提交订单时需要删除购物车中的购物项
         if (newBeeMallShoppingCartItemMapper.deleteBatch(itemIdList) <= 0) {
