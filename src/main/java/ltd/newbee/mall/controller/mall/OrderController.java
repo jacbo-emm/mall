@@ -66,6 +66,9 @@ public class OrderController {
     @Autowired
     private AlipayConfig alipayConfig;
 
+    @Value("${payServerUrl}")
+    private String payServerUrl;
+
 
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
@@ -145,9 +148,6 @@ public class OrderController {
         request.setAttribute("totalPrice", newBeeMallOrder.getTotalPrice());
         return "mall/pay-select";
     }
-
-    @Value("${payServerUrl}")
-    private String payServerUrl;
 
     //支付宝的使用
     @RepeatSubmit
