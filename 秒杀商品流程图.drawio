@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T01:54:53.519Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="MQzTbJ5fdDsOeEroMyT6" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T02:41:50.652Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="XK-auuU-wErlvbBxL5zC" type="github">
   <diagram id="SfYL227m2gQ5KlGTOzU7" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -38,8 +38,26 @@
             <mxPoint x="570" y="270" as="targetPoint" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-170" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-165" target="JAwFecL3JbLE5yRRIegU-169">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="JAwFecL3JbLE5yRRIegU-165" value="进入商品详情页" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="450" y="340" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-172" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-169" target="JAwFecL3JbLE5yRRIegU-171">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-169" value="获取秒杀地址，控制显示逻辑，执行秒杀" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="480" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-174" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-171" target="JAwFecL3JbLE5yRRIegU-173">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-171" value="发送秒杀请求" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="620" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-173" value="用户有秒杀令牌?" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="450" y="750" width="120" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
