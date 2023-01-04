@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T02:44:39.946Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="JF3ch-JOjSEMcG4D4RSr" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T02:54:47.151Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="9poye-SrCKwhQzq6R6f6" type="github">
   <diagram id="SfYL227m2gQ5KlGTOzU7" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -64,11 +64,38 @@
             <mxPoint y="-3" as="offset" />
           </mxGeometry>
         </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-179" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-173" target="JAwFecL3JbLE5yRRIegU-178">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="510" y="850" />
+              <mxPoint x="510" y="850" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-180" value="有令牌" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-179">
+          <mxGeometry x="-0.328" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="JAwFecL3JbLE5yRRIegU-173" value="用户有秒杀令牌?" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="450" y="750" width="120" height="70" as="geometry" />
         </mxCell>
         <mxCell id="JAwFecL3JbLE5yRRIegU-175" value="拒绝请求，用户必须有令牌" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="690" y="755" width="80" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-182" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-178" target="JAwFecL3JbLE5yRRIegU-181">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-183" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-182">
+          <mxGeometry x="-0.1896" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-178" value="秒杀商品是否在有效期内？" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="415" y="930" width="190" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-181" value="秒杀结束，禁用开始秒杀按钮" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="720" y="935" width="90" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
