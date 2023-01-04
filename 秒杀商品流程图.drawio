@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T01:44:37.370Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="DzJ5Sxo8damSlF2CbDC7" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T01:46:55.552Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="vXLHdWWk-SXiV15XF2Gx" type="github">
   <diagram id="SfYL227m2gQ5KlGTOzU7" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -10,8 +10,25 @@
         <mxCell id="JAwFecL3JbLE5yRRIegU-1" value="点击开始秒杀按钮" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
           <mxGeometry x="460" y="40" width="100" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-160" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-157" target="JAwFecL3JbLE5yRRIegU-159">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-161" value="未登录" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-160">
+          <mxGeometry x="-0.5079" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="JAwFecL3JbLE5yRRIegU-157" value="用户已登录？" style="rhombus;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="470" y="170" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-159" value="用户登录接口" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="710" y="40" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-164" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-159" target="JAwFecL3JbLE5yRRIegU-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="320" as="sourcePoint" />
+            <mxPoint x="570" y="270" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
