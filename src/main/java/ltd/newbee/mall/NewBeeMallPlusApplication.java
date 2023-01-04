@@ -47,7 +47,6 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
 
     //服务启动后自动调用的方法
     @Override
-    @Transactional
     public void run(String... args) throws Exception {
         //将redis的订单主键和mysql里的订单主键保持一直
         Long newOrderCount = newBeeMallOrderService.selectMaxOrderId();
