@@ -320,11 +320,13 @@ public class OrderController {
     @PutMapping("/orders/{orderNo}/refund")
     @ResponseBody
     public Result refundOrder(@PathVariable("orderNo") String orderNo){
+        //判断退款记录是否存在
         List<AlipayRefundRecord> refundRecords = alipayRefundRecordService.selectByOrderNo(orderNo);
         if(!(refundRecords != null && refundRecords.size() > 0)){
             return ResultGenerator.genFailResult("退款记录不存在，无法退款");
         }
         AlipayRefundRecord rr = refundRecords.get(0);
+        //判断是否已进行过退款
         if(rr.getStatus() == 1){
             return ResultGenerator.genFailResult("已进行退款，无法重复进行退款");
         }
@@ -350,12 +352,14 @@ public class OrderController {
         AlipayTradeRefundResponse result = null;
 
         try{
+            //发起请求，返回结果
             result = alipayClient.execute(refundRequest);
         }catch (AlipayApiException e){
             e.printStackTrace();
         }
 
         if (result.isSuccess()) {
+            //退款成功
             String refundSuccessResult = newBeeMallOrderService.refundSuccess(orderNo);
             if(!ServiceResultEnum.SUCCESS.getResult().equals(refundSuccessResult)){
                 return ResultGenerator.genFailResult(refundSuccessResult);
