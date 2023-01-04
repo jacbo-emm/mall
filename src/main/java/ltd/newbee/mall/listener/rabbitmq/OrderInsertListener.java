@@ -39,7 +39,7 @@ public class OrderInsertListener {
         try{
             if(newBeeMallOrderMapper.selectByOrderNo(order.getOrderNo()) != null) return;
             int row = newBeeMallOrderMapper.insertSelective(order);
-            if(row < 1) throw new NewBeeMallException(ServiceResultEnum.DB_ERROR.getResult());
+            if(row < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
             logger.info("订单号为" + order.getOrderNo() + "的订单插入成功");
         }catch (Exception e){
             e.printStackTrace();

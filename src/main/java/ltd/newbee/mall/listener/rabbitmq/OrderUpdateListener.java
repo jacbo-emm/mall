@@ -48,19 +48,19 @@ public class OrderUpdateListener {
                 //判断数据库中的订单状态是否已经为已支付
                 if (o.getOrderStatus() == NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()
                         || o.getPayStatus() == PayStatusEnum.PAY_SUCCESS.getPayStatus()) {
-                    throw new NewBeeMallException("订单状态已为已支付状态");
+                    NewBeeMallException.fail("订单状态已为已支付状态");
                 }
             }else{
                 throw new NewBeeMallException("订单信息不存在");
             }
-            if(!newBeeMallOrderService.updateByPrimaryKeySelective(order)) throw new NewBeeMallException(ServiceResultEnum.DB_ERROR.getResult());
+            if(!newBeeMallOrderService.updateByPrimaryKeySelective(order)) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
             //未支付状态转为已支付状态成功时，将付款记录表中的状态改为已付款
             if(alipayPayRecordService.selectByOrderNo(order.getOrderNo()) != null){
                 if(alipayPayRecordService.updateStatus(Constants.ALIPAY_STATUS_PAYED, order.getOrderNo()) < 1){
-                    NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+                    NewBeeMallException.fail("付款记录状态更新失败");
                 }
             }else{
-                throw new NewBeeMallException("付款记录不存在");
+                NewBeeMallException.fail("付款记录不存在");
             }
             logger.info("订单号为" + order.getOrderNo() + "的订单由未支付状态转为已支付状态");
         }catch (Exception e){
