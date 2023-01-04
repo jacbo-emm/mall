@@ -751,7 +751,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             else{
                 //如果传入值为null，表示退剩下的没退的部分的值
                 if(needRefundAmount == null){
-                    needRefundAmount = recordAmount.subtract(res).abs().toString();
+                    BigDecimal x = recordAmount.subtract(res).abs();
+                    if(x.compareTo(BigDecimal.ZERO) == 0) return;
+                    needRefundAmount = x.toString();
                 }else{
                 //如果传入值不为null，则看看加上传入值，退款总额会不会大过付款额
                     res = res.add(BigDecimal.valueOf(Double.valueOf(needRefundAmount)));
