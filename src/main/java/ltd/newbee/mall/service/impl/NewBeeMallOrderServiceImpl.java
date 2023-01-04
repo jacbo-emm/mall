@@ -800,7 +800,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Override
     public String refundSuccess(String orderNo) {
         if(alipayRefundRecordMapper.updateStatusByOrderNo(new Date(), Constants.ALIPAY_STATUS_REFUNDED, orderNo) < 1){
-            return "更新数据库异常";
+            return ServiceResultEnum.DB_ERROR.getResult();
         }
         return ServiceResultEnum.SUCCESS.getResult();
     }
