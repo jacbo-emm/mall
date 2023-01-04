@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T12:44:24.433Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="0KYQsHBL6qdqD-0AZwiS" version="20.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T12:52:10.182Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="65UwFVl3sdUp6xFcrQ2b" version="20.6.2" type="github">
   <diagram id="4Y32ba66QtfCY48dSmAX" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -6,6 +6,15 @@
         <mxCell id="1" parent="0" />
         <mxCell id="ReLC726yvotE5dXZ1UYB-1" value="用户" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="210" y="60" width="100" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-31" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-1">
+          <mxGeometry x="40" y="400" width="20" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-33" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-1">
+          <mxGeometry x="40" y="60" width="20" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-39" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-1">
+          <mxGeometry x="40" y="480" width="20" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ReLC726yvotE5dXZ1UYB-2" value="商城服务" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
           <mxGeometry x="500" y="60" width="160" height="620" as="geometry" />
@@ -25,18 +34,22 @@
         <mxCell id="NoOIE4BbJ2oG4agebCFr-29" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-2">
           <mxGeometry x="70" y="400" width="20" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ReLC726yvotE5dXZ1UYB-4" value="1、发起秒杀请求" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;rounded=0;" parent="1" source="ReLC726yvotE5dXZ1UYB-1" target="ReLC726yvotE5dXZ1UYB-3" edge="1">
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-40" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-2">
+          <mxGeometry x="70" y="480" width="20" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-4" value="1、发起秒杀请求" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;rounded=0;" parent="1" target="ReLC726yvotE5dXZ1UYB-3" edge="1">
           <mxGeometry x="-0.0327" y="10" relative="1" as="geometry">
-            <mxPoint x="490" y="120" as="sourcePoint" />
+            <mxPoint x="270" y="120" as="sourcePoint" />
             <Array as="points">
               <mxPoint x="410" y="120" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ReLC726yvotE5dXZ1UYB-5" value="return" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;exitX=0;exitY=0.95;rounded=0;" parent="1" source="ReLC726yvotE5dXZ1UYB-3" target="ReLC726yvotE5dXZ1UYB-1" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="490" y="196" as="targetPoint" />
+        <mxCell id="ReLC726yvotE5dXZ1UYB-5" value="" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;exitX=0;exitY=0.95;rounded=0;" parent="1" source="ReLC726yvotE5dXZ1UYB-3" edge="1">
+          <mxGeometry x="-0.1367" y="-38" relative="1" as="geometry">
+            <mxPoint x="270" y="200" as="targetPoint" />
+            <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ReLC726yvotE5dXZ1UYB-6" value="" style="shape=mxgraph.cisco.computers_and_peripherals.laptop;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" parent="1" vertex="1">
@@ -95,6 +108,46 @@
         </mxCell>
         <mxCell id="NoOIE4BbJ2oG4agebCFr-30" value="是否生成token" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="610" y="480" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-32" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="NoOIE4BbJ2oG4agebCFr-31">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="500" as="sourcePoint" />
+            <mxPoint x="570" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-34" value="2、短轮询探测是否获得秒杀资格" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="300" y="430" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-36" value="" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="NoOIE4BbJ2oG4agebCFr-29" target="NoOIE4BbJ2oG4agebCFr-31">
+          <mxGeometry x="-0.1367" y="-38" relative="1" as="geometry">
+            <mxPoint x="280" y="210" as="targetPoint" />
+            <mxPoint x="490" y="370" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-37" value="发起秒杀" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="165" y="140" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-38" value="查询秒杀资格" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="135" y="470" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-41" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="NoOIE4BbJ2oG4agebCFr-39" target="NoOIE4BbJ2oG4agebCFr-40">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="510" as="sourcePoint" />
+            <mxPoint x="580" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-42" value="" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="NoOIE4BbJ2oG4agebCFr-40" target="NoOIE4BbJ2oG4agebCFr-39">
+          <mxGeometry x="-0.1367" y="-38" relative="1" as="geometry">
+            <mxPoint x="290" y="220" as="targetPoint" />
+            <mxPoint x="500" y="380" as="sourcePoint" />
+            <mxPoint as="offset" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-44" value="秒杀结算" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="165" y="565" width="70" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
