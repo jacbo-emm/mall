@@ -67,11 +67,11 @@ public class OrderTimeoutListener {
             }
             //将订单状态改为-2（超时关闭）
             int row = newBeeMallOrderMapper.deleteByPrimaryKeyWhenTimeout(order.getOrderId());
-            if(row < 1) throw new NewBeeMallException(ServiceResultEnum.DB_ERROR.getResult());
+            if(row < 1) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
             logger.info("订单号为" + order.getOrderNo() + "的超时订单关闭成功");
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("订单号为" + orderNo + "的超时订单超时关闭失败，原因：数据库存在异常");
+            logger.error("订单号为" + orderNo + "的超时订单超时关闭失败，原因：" + e.getMessage());
             throw e;
         }
     }
