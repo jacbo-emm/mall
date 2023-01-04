@@ -683,13 +683,13 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         }else{
             return "付款记录不存在";
         }
-        //进行退款标记
+        //生成退款记录
         if(newBeeMallOrder.getOrderStatus() == 1){
-            //若为已支付订单则进行退款标记
+            //若为已支付订单则生成退款标记
             try {
                 refund(newBeeMallOrder.getOrderNo(), null);
             }catch (Exception e){
-                return "生成退款标识失败";
+                return "生成退款记录失败";
             }
         }
 
