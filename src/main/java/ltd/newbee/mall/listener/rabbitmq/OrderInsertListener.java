@@ -43,7 +43,7 @@ public class OrderInsertListener {
             logger.info("订单号为" + order.getOrderNo() + "的订单插入成功");
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("订单号为" + order.getOrderNo() + "的订单插入失败，原因：数据库存在异常");
+            logger.error("订单号为" + order.getOrderNo() + "的订单插入失败，原因：" + e.getMessage());
             StringBuffer key = new StringBuffer();
             key.append(Constants.PAY + ".");
             key.append(order.getUserId() + ".");
