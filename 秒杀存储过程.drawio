@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T07:52:54.311Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="0Eb7yMtOBMIT7XU5eAXN" version="20.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T08:10:13.320Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="GkCrdk7c7KyH_547Xyd4" version="20.6.2" type="github">
   <diagram id="4Y32ba66QtfCY48dSmAX" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -26,6 +26,12 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="490" y="196" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-6" value="" style="shape=mxgraph.cisco.computers_and_peripherals.laptop;sketch=0;html=1;pointerEvents=1;dashed=0;fillColor=#036897;strokeColor=#ffffff;strokeWidth=2;verticalLabelPosition=bottom;verticalAlign=top;align=center;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="770" y="140" width="90" height="61" as="geometry" />
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-7" value="" style="aspect=fixed;perimeter=ellipsePerimeter;html=1;align=center;shadow=0;dashed=0;spacingTop=3;image;image=img/lib/active_directory/generic_server.svg;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="115.5" width="61.6" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
