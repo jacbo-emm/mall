@@ -14,12 +14,15 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.dao.NewBeeMallOrderMapper;
 import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.redis.RedisCache;
+import ltd.newbee.mall.service.AlipayRefundRecordService;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
+import ltd.newbee.mall.util.MD5Util;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,8 +42,12 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
     @Autowired
     private NewBeeMallOrderService newBeeMallOrderService;
 
+    @Autowired
+    private AlipayRefundRecordService alipayRefundRecordService;
+
     //服务启动后自动调用的方法
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         //将redis的订单主键和mysql里的订单主键保持一直
         Long newOrderCount = newBeeMallOrderService.selectMaxOrderId();
@@ -57,13 +64,17 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
             if(c.getTime().getTime() < d.getTime()){
                 //已支付
                 if(order.getOrderStatus() == 1){
-                    //超时退款标记
-                    newBeeMallOrderService.refund(order.getOrderNo(), null);
+                    if(alipayRefundRecordService.selectByOrderNo(order.getOrderNo()) == null){
+                        //超时退款标记
+                        newBeeMallOrderService.refund(order.getOrderNo(), null);
+                    }
                     orderIds.add(order.getOrderId());
+                    redisCache.deleteObject(getPayKey(order));
                 }
                 //未支付
                 else if(order.getOrderStatus() == 0){
                     orderIds.add(order.getOrderId());
+                    redisCache.deleteObject(getPayKey(order));
                 }
             }
         }
@@ -76,5 +87,16 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
         }catch (Exception e){
             NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
         }
+    }
+
+    private String getPayKey(NewBeeMallOrder order) {
+        StringBuffer orderKey = new StringBuffer();
+        orderKey.append(Constants.PAY + ".");
+        String userId = order.getUserId() + ".";
+        String orderNo = order.getOrderNo() + ".";
+        orderKey.append(userId);
+        orderKey.append(orderNo);
+        orderKey.append(MD5Util.getSuffix());
+        return orderKey.toString();
     }
 }

@@ -55,7 +55,7 @@ public class OrderTimeoutListener {
             return;
         }
         try{
-            //用户取消已支付订单则进行全额退款标记
+            //用户已支付订单超时则进行全额退款标记
             if(order.getOrderStatus() == 1 && alipayRefundRecordMapper.selectByOrderNo(order.getOrderNo()) == null){
                 //若为已支付订单则生成退款标记
                 try {
