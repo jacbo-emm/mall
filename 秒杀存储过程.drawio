@@ -1,11 +1,11 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T12:52:10.182Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="65UwFVl3sdUp6xFcrQ2b" version="20.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T12:53:46.624Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="SWUUBF1aybil2TlX5K1W" version="20.6.2" type="github">
   <diagram id="4Y32ba66QtfCY48dSmAX" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
         <mxCell id="ReLC726yvotE5dXZ1UYB-1" value="用户" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="210" y="60" width="100" height="620" as="geometry" />
+          <mxGeometry x="210" y="60" width="100" height="790" as="geometry" />
         </mxCell>
         <mxCell id="NoOIE4BbJ2oG4agebCFr-31" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-1">
           <mxGeometry x="40" y="400" width="20" height="50" as="geometry" />
@@ -17,7 +17,7 @@
           <mxGeometry x="40" y="480" width="20" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ReLC726yvotE5dXZ1UYB-2" value="商城服务" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" parent="1" vertex="1">
-          <mxGeometry x="500" y="60" width="160" height="620" as="geometry" />
+          <mxGeometry x="500" y="60" width="160" height="800" as="geometry" />
         </mxCell>
         <mxCell id="ReLC726yvotE5dXZ1UYB-3" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;" parent="ReLC726yvotE5dXZ1UYB-2" vertex="1">
           <mxGeometry x="70" y="60" width="20" height="80" as="geometry" />
@@ -148,6 +148,12 @@
         </mxCell>
         <mxCell id="NoOIE4BbJ2oG4agebCFr-44" value="秒杀结算" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="165" y="565" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-45" value="3、秒杀结算" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="300" y="510" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="NoOIE4BbJ2oG4agebCFr-46" value="验证下单token" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="610" y="550" width="100" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
