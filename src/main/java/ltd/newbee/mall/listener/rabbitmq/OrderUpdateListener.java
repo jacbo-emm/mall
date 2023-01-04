@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 @Component
 @RabbitListener(queues = RabbitmqConstant.ORDER_UPDATE_QUEUE)
@@ -41,9 +42,10 @@ public class OrderUpdateListener {
     @RabbitHandler
     public void receiveUpdateOrder(String orderInJson, Message message, Channel channel) throws IOException {
         NewBeeMallOrder order = JSON.parseObject(orderInJson, NewBeeMallOrder.class);
+        NewBeeMallOrder o = null;
         try{
             //判断订单信息是否存在
-            NewBeeMallOrder o = newBeeMallOrderMapper.selectByOrderNo(order.getOrderNo());
+            o = newBeeMallOrderMapper.selectByOrderNo(order.getOrderNo());
             if(o != null){
                 //判断数据库中的订单状态是否已经为已支付
                 if (o.getOrderStatus() == NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()
@@ -72,8 +74,15 @@ public class OrderUpdateListener {
             key.append(order.getOrderNo() + ".");
             key.append(MD5Util.getSuffix());
             try{
-                //未支付转已支付出现异常，直接去除redis的已支付信息
-                if(redisCache.isExist(key.toString())) redisCache.deleteObject(key.toString());
+                //未支付转已支付出现异常，判断订单信息是否存在，存在则将信息转为未支付，超时时间沿用之前的
+                if(redisCache.isExist(key.toString())){
+                    if(o != null){
+                        Long expire = redisCache.getExpire(key.toString(), TimeUnit.SECONDS);
+                        redisCache.setCacheObject(key.toString(), JSON.toJSONString(o), expire, TimeUnit.SECONDS);
+                    }else{
+                        NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+                    }
+                }
             }catch (Exception ex){
                 NewBeeMallException.fail(ServiceResultEnum.REDIS_ERROR.getResult());
             }
