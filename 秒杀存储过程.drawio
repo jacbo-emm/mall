@@ -1,1 +1,33 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T03:31:32.046Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="mQr3Gr_BAJ99bLNtkygu" version="20.6.2" type="github"><diagram id="4Y32ba66QtfCY48dSmAX" name="第 1 页">ddG9DoMgEADgp2Gn0D9na+3SyaEzkauQoGeQRtunrwasJbYLge/uOHIQntZDbkWrrijBEEblQPiJMJYkbFwneHrYHRIPldXS02aBQr8gIA360BK6KNEhGqfbGEtsGihdZMJa7OO0O5q4aysqWEFRCrPWm5ZOeeWc0iVwAV2p0Hq7P4aSWszZIbVTQmL/RTwjPLWIzu/qIQUzDW8ejK87/4l+XmahcT8Kxs1y93iIfohnbw==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2023-01-04T07:52:54.311Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="0Eb7yMtOBMIT7XU5eAXN" version="20.6.2" type="github">
+  <diagram id="4Y32ba66QtfCY48dSmAX" name="第 1 页">
+    <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ReLC726yvotE5dXZ1UYB-1" value="用户" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="60" width="100" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-2" value="商城服务" style="shape=umlLifeline;perimeter=lifelinePerimeter;whiteSpace=wrap;html=1;container=1;collapsible=0;recursiveResize=0;outlineConnect=0;" vertex="1" parent="1">
+          <mxGeometry x="510" y="60" width="100" height="620" as="geometry" />
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-3" value="" style="html=1;points=[];perimeter=orthogonalPerimeter;" vertex="1" parent="ReLC726yvotE5dXZ1UYB-2">
+          <mxGeometry x="40" y="60" width="20" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-4" value="1、发起秒杀请求" style="html=1;verticalAlign=bottom;endArrow=block;entryX=0;entryY=0;rounded=0;" edge="1" target="ReLC726yvotE5dXZ1UYB-3" parent="1" source="ReLC726yvotE5dXZ1UYB-1">
+          <mxGeometry x="-0.0327" y="10" relative="1" as="geometry">
+            <mxPoint x="490" y="120" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="410" y="120" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ReLC726yvotE5dXZ1UYB-5" value="return" style="html=1;verticalAlign=bottom;endArrow=open;dashed=1;endSize=8;exitX=0;exitY=0.95;rounded=0;" edge="1" source="ReLC726yvotE5dXZ1UYB-3" parent="1" target="ReLC726yvotE5dXZ1UYB-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="196" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
