@@ -733,7 +733,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public void refund(String orderNo, String needRefundAmount){
         //查找先前的付款记录
         AlipayPayRecord record = alipayPayRecordMapper.selectByOrderNo(orderNo);
-        if(record == null) NewBeeMallException.fail(ServiceResultEnum.REFUND_ERROR.getResult());
+        if(record == null) NewBeeMallException.fail("付款记录不存在，无法生成退款记录");
         //实际付款额
         BigDecimal recordAmount = BigDecimal.valueOf(Double.valueOf(record.getTotalAmount()));
 
