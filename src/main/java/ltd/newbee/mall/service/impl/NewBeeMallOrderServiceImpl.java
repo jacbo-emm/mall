@@ -520,8 +520,13 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                     //修改redis中的订单信息
                     for(NewBeeMallOrder order : orders){
                         //商户取消已支付订单则进行全额退款标记
-                        if(order.getOrderStatus() == 1){
-                            refund(order.getOrderNo(), null);
+                        if(order.getOrderStatus() == 1 && alipayRefundRecordMapper.selectByOrderNo(order.getOrderNo()) == null){
+                            //若为已支付订单则生成退款标记
+                            try {
+                                refund(order.getOrderNo(), null);
+                            }catch (Exception e){
+                                return ServiceResultEnum.REFUND_GEN_FAIL.getResult();
+                            }
                         }
                         updateOrderStatusInRedis(d, order, (byte) NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus(),86400l * 2 + ((long) Math.random() * 36001), TimeUnit.SECONDS);
                     }
@@ -564,8 +569,13 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             Date d = new Date();
             if (newBeeMallOrderMapper.closeOrder(Collections.singletonList(newBeeMallOrder.getOrderId()), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus(), d) > 0) {
                 //用户取消已支付订单则进行全额退款标记
-                if(newBeeMallOrder.getOrderStatus() == 1){
-                    refund(orderNo, null);
+                if(newBeeMallOrder.getOrderStatus() == 1 && alipayRefundRecordMapper.selectByOrderNo(newBeeMallOrder.getOrderNo()) == null){
+                    //若为已支付订单则生成退款标记
+                    try {
+                        refund(newBeeMallOrder.getOrderNo(), null);
+                    }catch (Exception e){
+                        return ServiceResultEnum.REFUND_GEN_FAIL.getResult();
+                    }
                 }
                 updateOrderStatusInRedis(d, newBeeMallOrder, (byte) NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus(), 86400l * 2 + ((long) Math.random() * 36001), TimeUnit.SECONDS);
                 return ServiceResultEnum.SUCCESS.getResult();
@@ -689,7 +699,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             try {
                 refund(newBeeMallOrder.getOrderNo(), null);
             }catch (Exception e){
-                return "生成退款记录失败";
+                return ServiceResultEnum.REFUND_GEN_FAIL.getResult();
             }
         }
 

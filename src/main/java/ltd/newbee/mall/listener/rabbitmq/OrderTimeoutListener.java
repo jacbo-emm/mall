@@ -5,6 +5,7 @@ import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.NewBeeMallOrderStatusEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.dao.AlipayRefundRecordMapper;
 import ltd.newbee.mall.dao.NewBeeMallOrderMapper;
 import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.rabbitmq.RabbitmqConstant;
@@ -37,6 +38,9 @@ public class OrderTimeoutListener {
     @Autowired
     private AlipayPayRecordService alipayPayRecordService;
 
+    @Autowired
+    private AlipayRefundRecordMapper alipayRefundRecordMapper;
+
     @RabbitHandler
     public void receiveTimeoutOrder(String orderNo, Message message, Channel channel) throws IOException {
         //超时关闭数据库更新
@@ -51,9 +55,14 @@ public class OrderTimeoutListener {
             return;
         }
         try{
-            if(order.getOrderStatus() == 1){
-                //若为已支付的超时订单做退款标记
-                newBeeMallOrderService.refund(orderNo, null);
+            //用户取消已支付订单则进行全额退款标记
+            if(order.getOrderStatus() == 1 && alipayRefundRecordMapper.selectByOrderNo(order.getOrderNo()) == null){
+                //若为已支付订单则生成退款标记
+                try {
+                    newBeeMallOrderService.refund(order.getOrderNo(), null);
+                }catch (Exception e){
+                    NewBeeMallException.fail(ServiceResultEnum.REFUND_GEN_FAIL.getResult());
+                }
             }
             //将订单状态改为-2（超时关闭）
             int row = newBeeMallOrderMapper.deleteByPrimaryKeyWhenTimeout(order.getOrderId());
