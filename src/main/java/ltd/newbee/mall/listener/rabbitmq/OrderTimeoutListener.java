@@ -46,7 +46,7 @@ public class OrderTimeoutListener {
         //超时关闭数据库更新
         NewBeeMallOrder order = newBeeMallOrderMapper.selectByOrderNo(orderNo);
         if(null == order){
-            logger.error("订单号为" + orderNo + "的超时订单删除失败，原因：数据库中不存在待删除的订单信息");
+            logger.error("订单号为" + orderNo + "的超时订单超时关闭失败，原因：数据库中不存在待删除的订单信息");
             return;
         }
 
@@ -71,7 +71,7 @@ public class OrderTimeoutListener {
             logger.info("订单号为" + order.getOrderNo() + "的超时订单关闭成功");
         }catch (Exception e){
             e.printStackTrace();
-            logger.error("订单号为" + orderNo + "的超时订单关闭失败，原因：数据库存在异常");
+            logger.error("订单号为" + orderNo + "的超时订单超时关闭失败，原因：数据库存在异常");
             throw e;
         }
     }
