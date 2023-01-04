@@ -675,14 +675,28 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         newBeeMallOrder.setPayTime(new Date());
         newBeeMallOrder.setUpdateTime(new Date());
 
+        //将付款记录表中的状态改为已付款
+        if(alipayPayRecordMapper.selectByOrderNo(newBeeMallOrder.getOrderNo()) != null){
+            if(alipayPayRecordMapper.updateStatus(Constants.ALIPAY_STATUS_PAYED, newBeeMallOrder.getOrderNo()) < 1){
+                return "付款记录状态更新失败";
+            }
+        }else{
+            return "付款记录不存在";
+        }
+        //进行退款标记
+        if(newBeeMallOrder.getOrderStatus() == 1){
+            //若为已支付订单则进行退款标记
+            try {
+                refund(newBeeMallOrder.getOrderNo(), null);
+            }catch (Exception e){
+                return "生成退款标识失败";
+            }
+        }
+
         // 未支付订单改为已支付订单
         try{
             unpayToPayed(newBeeMallOrder);
         }catch (Exception e){
-            //若为已支付订单则进行退款标识
-            if(newBeeMallOrder.getOrderStatus() == 1){
-                refund(newBeeMallOrder.getOrderNo(), null);
-            }
             return "更新未支付订单为已支付订单失败";
         }
 //        if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) <= 0) {

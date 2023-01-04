@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -50,20 +52,12 @@ public class OrderUpdateListener {
                 //判断数据库中的订单状态是否已经为已支付
                 if (o.getOrderStatus() == NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus()
                         || o.getPayStatus() == PayStatusEnum.PAY_SUCCESS.getPayStatus()) {
-                    NewBeeMallException.fail("订单状态已为已支付状态");
+                    return;
                 }
             }else{
                 throw new NewBeeMallException("订单信息不存在");
             }
             if(!newBeeMallOrderService.updateByPrimaryKeySelective(order)) NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
-            //未支付状态转为已支付状态成功时，将付款记录表中的状态改为已付款
-            if(alipayPayRecordService.selectByOrderNo(order.getOrderNo()) != null){
-                if(alipayPayRecordService.updateStatus(Constants.ALIPAY_STATUS_PAYED, order.getOrderNo()) < 1){
-                    NewBeeMallException.fail("付款记录状态更新失败");
-                }
-            }else{
-                NewBeeMallException.fail("付款记录不存在");
-            }
             logger.info("订单号为" + order.getOrderNo() + "的订单由未支付状态转为已支付状态");
         }catch (Exception e){
             e.printStackTrace();
@@ -77,19 +71,21 @@ public class OrderUpdateListener {
                 //未支付转已支付出现异常，判断订单信息是否存在，存在则将信息转为未支付，超时时间沿用之前的
                 if(redisCache.isExist(key.toString())){
                     if(o != null){
-                        Long expire = redisCache.getExpire(key.toString(), TimeUnit.SECONDS);
-                        redisCache.setCacheObject(key.toString(), JSON.toJSONString(o), expire, TimeUnit.SECONDS);
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(o.getCreateTime());
+                        c.add(Calendar.MINUTE, 30);
+                        Date now = new Date();
+                        if(now.getTime() > c.getTime().getTime()){
+                            redisCache.deleteObject(key.toString());
+                        }else{
+                            redisCache.setCacheObject(key.toString(), JSON.toJSONString(o), now.getTime() - c.getTime().getTime(), TimeUnit.MILLISECONDS);
+                        }
                     }else{
                         NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
                     }
                 }
             }catch (Exception ex){
                 NewBeeMallException.fail(ServiceResultEnum.REDIS_ERROR.getResult());
-            }
-            //进行退款标记
-            if(order.getOrderStatus() == 1){
-                //若为已支付订单则进行退款标记
-                newBeeMallOrderService.refund(order.getOrderNo(), null);
             }
             NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
         }
