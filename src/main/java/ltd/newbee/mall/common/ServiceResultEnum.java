@@ -62,7 +62,7 @@ public enum ServiceResultEnum {
 
     REDIS_ERROR("redis异常"),
 
-    REFUND_ERROR("自动退款异常"),
+    REFUND_ERROR("退款记录生成异常"),
 
     REFUND_GEN_FAIL("生成退款标记失败")
     ;
