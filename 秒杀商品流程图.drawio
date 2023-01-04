@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-04T03:02:58.056Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="c26uZsF_AsOFo8WaEQyR" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-04T03:27:24.208Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" version="20.6.2" etag="GH_9LdC77bwpvsFCxFNf" type="github">
   <diagram id="SfYL227m2gQ5KlGTOzU7" name="第 1 页">
     <mxGraphModel dx="992" dy="579" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -91,8 +91,10 @@
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JAwFecL3JbLE5yRRIegU-185" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-178" target="JAwFecL3JbLE5yRRIegU-184">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="JAwFecL3JbLE5yRRIegU-185" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-178">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="1090" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="JAwFecL3JbLE5yRRIegU-186" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-185">
           <mxGeometry x="-0.2941" y="-1" relative="1" as="geometry">
@@ -105,19 +107,64 @@
         <mxCell id="JAwFecL3JbLE5yRRIegU-181" value="秒杀结束，禁用开始秒杀按钮" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
           <mxGeometry x="720" y="935" width="90" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="JAwFecL3JbLE5yRRIegU-188" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-184" target="JAwFecL3JbLE5yRRIegU-187">
+        <mxCell id="JAwFecL3JbLE5yRRIegU-199" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-190" target="JAwFecL3JbLE5yRRIegU-198">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JAwFecL3JbLE5yRRIegU-189" value="库存不足" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-188">
+        <mxCell id="JAwFecL3JbLE5yRRIegU-200" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-199">
+          <mxGeometry x="-0.2629" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-190" value="是否购买过商品？" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="450" y="1090" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-191" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-193" target="JAwFecL3JbLE5yRRIegU-194">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-192" value="库存不足" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-191">
           <mxGeometry x="-0.231" y="2" relative="1" as="geometry">
             <mxPoint x="6" y="2" as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JAwFecL3JbLE5yRRIegU-184" value="读取redis中的库存数量" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="442.5" y="1090" width="135" height="60" as="geometry" />
+        <mxCell id="JAwFecL3JbLE5yRRIegU-202" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-193" target="JAwFecL3JbLE5yRRIegU-201">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="513" y="1330" />
+              <mxPoint x="513" y="1330" />
+            </Array>
+          </mxGeometry>
         </mxCell>
-        <mxCell id="JAwFecL3JbLE5yRRIegU-187" value="拒绝请求，显示库存为空的禁用按钮" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
-          <mxGeometry x="720" y="1090" width="100" height="60" as="geometry" />
+        <mxCell id="JAwFecL3JbLE5yRRIegU-203" value="库存足够" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JAwFecL3JbLE5yRRIegU-202">
+          <mxGeometry x="-0.1891" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-193" value="读取redis中的库存数量" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="440" y="1240" width="145" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-194" value="拒绝请求，显示库存为空的禁用按钮" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="720" y="1240" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-195" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-194" target="JAwFecL3JbLE5yRRIegU-194">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-196" value="" style="endArrow=classic;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-190">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="420" y="1230" as="sourcePoint" />
+            <mxPoint x="510" y="1240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-198" value="拒绝请求，弹出请勿重复购买的提示框" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="720" y="1100" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-205" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="JAwFecL3JbLE5yRRIegU-201" target="JAwFecL3JbLE5yRRIegU-204">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-201" value="扣减redis中的库存" style="whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="452.5" y="1390" width="117.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="JAwFecL3JbLE5yRRIegU-204" value="订单创建成功" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="456.88" y="1510" width="108.75" height="45" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
