@@ -45,13 +45,14 @@ public class OrderTimeoutListener {
     public void receiveTimeoutOrder(String orderNo, Message message, Channel channel) throws IOException {
         //超时关闭数据库更新
         NewBeeMallOrder order = newBeeMallOrderMapper.selectByOrderNo(orderNo);
+        if(null == order){
+            logger.error("订单号为" + orderNo + "的超时订单删除失败，原因：数据库中不存在待删除的订单信息");
+            return;
+        }
+
         //除未支付和已支付订单会出现超时关闭的情况，别的都不会，故别的超时都不做处理
         if(!(order.getOrderStatus() == NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()
                 || order.getOrderStatus() == NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus())){
-            return;
-        }
-        if(null == order){
-            logger.error("订单号为" + orderNo + "的超时订单删除失败，原因：数据库中不存在待删除的订单信息");
             return;
         }
         try{
