@@ -58,4 +58,4 @@ alipay:
   log-path: D://newbee-mall-plus//log
   signtype: RSA2
 
-payServerUrl: http://s0.z100.vip:23181 #内网穿透地址配置
+payServerUrl: http://s0.z100.vip:16019 #内网穿透地址配置

@@ -17,6 +17,8 @@ import ltd.newbee.mall.entity.*;
 import ltd.newbee.mall.rabbitmq.RabbitmqConstant;
 import ltd.newbee.mall.redis.RedisCache;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
+import ltd.newbee.mall.task.OrderUnPaidTask;
+import ltd.newbee.mall.task.TaskService;
 import ltd.newbee.mall.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -77,9 +79,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    //超时服务（改为使用redis监听过期key）
-//    @Autowired
-//    private TaskService taskService;
+    //超时服务（仅为秒杀模块服务）
+    @Autowired
+    private TaskService taskService;
 
     @Override
     public int timeOutClose(List<Long> orderIds, Date date) {
@@ -310,7 +312,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             throw new NewBeeMallException("生成订单内部异常");
         }
 //        // 订单支付超期任务
-//        taskService.addTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId(), 30 * 1000));
+        taskService.addTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId(), 30 * 1000));
         return orderNo;
     }
 
