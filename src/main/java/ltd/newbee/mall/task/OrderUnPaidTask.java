@@ -9,7 +9,7 @@ import ltd.newbee.mall.dao.NewBeeMallSeckillMapper;
 import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.entity.NewBeeMallOrderItem;
 import ltd.newbee.mall.redis.RedisCache;
-import ltd.newbee.mall.service.NewBeeMallCouponService;
+import ltd.newbee.mall.service.NewBeeMallUserCouponService;
 import ltd.newbee.mall.util.SpringContextUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +49,7 @@ public class OrderUnPaidTask extends Task {
         NewBeeMallOrderMapper newBeeMallOrderMapper = SpringContextUtil.getBean(NewBeeMallOrderMapper.class);
         NewBeeMallOrderItemMapper newBeeMallOrderItemMapper = SpringContextUtil.getBean(NewBeeMallOrderItemMapper.class);
         NewBeeMallGoodsMapper newBeeMallGoodsMapper = SpringContextUtil.getBean(NewBeeMallGoodsMapper.class);
-        NewBeeMallCouponService newBeeMallCouponService = SpringContextUtil.getBean(NewBeeMallCouponService.class);
+        NewBeeMallUserCouponService newBeeMallUserCouponService =SpringContextUtil.getBean(NewBeeMallUserCouponService.class);
 
         NewBeeMallOrder order = newBeeMallOrderMapper.selectByPrimaryKey(orderId);
         if (order == null) {
@@ -89,7 +89,7 @@ public class OrderUnPaidTask extends Task {
         }
 
         // 返还优惠券
-        newBeeMallCouponService.releaseCoupon(orderId);
+        newBeeMallUserCouponService.releaseCoupon(orderId);
         log.info("系统结束处理延时任务---订单超时未付款--- {}", this.orderId);
     }
 }

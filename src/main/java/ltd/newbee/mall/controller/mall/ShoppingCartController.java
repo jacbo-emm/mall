@@ -9,6 +9,7 @@ import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.NewBeeMallShoppingCartItem;
 import ltd.newbee.mall.service.NewBeeMallCouponService;
 import ltd.newbee.mall.service.NewBeeMallShoppingCartService;
+import ltd.newbee.mall.service.NewBeeMallUserCouponService;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class ShoppingCartController {
     private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
 
     @Autowired
-    private NewBeeMallCouponService newBeeMallCouponService;
+    private NewBeeMallUserCouponService newBeeMallUserCouponService;
 
     @GetMapping("/shop-cart")
     public String cartListPage(HttpServletRequest request,
@@ -109,7 +110,8 @@ public class ShoppingCartController {
         List<NewBeeMallShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //无数据则不跳转至结算页
-            return "/shop-cart";
+//            return "/shop-cart";
+            return "/cart";
         } else {
             //总价
             for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
@@ -119,7 +121,7 @@ public class ShoppingCartController {
                 NewBeeMallException.fail("购物项价格异常");
             }
         }
-        List<NewBeeMallMyCouponVO> myCouponVOS = newBeeMallCouponService.selectOrderCanUseCoupons(myShoppingCartItems, priceTotal, user.getUserId());
+        List<NewBeeMallMyCouponVO> myCouponVOS = newBeeMallUserCouponService.selectOrderCanUseCoupons(myShoppingCartItems,priceTotal,user.getUserId());
         request.setAttribute("coupons", myCouponVOS);
         request.setAttribute("priceTotal", priceTotal);
         request.setAttribute("myShoppingCartItems", myShoppingCartItems);

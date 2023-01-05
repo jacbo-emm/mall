@@ -83,7 +83,7 @@
         from tb_newbee_mall_coupon
         where coupon_id = #{couponId,jdbcType=BIGINT}
     </delete>
-
+    <!--优惠券新增-->
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
         insert into tb_newbee_mall_coupon (coupon_id, coupon_name, coupon_desc,
                                            coupon_total, discount, min,
@@ -304,6 +304,7 @@
             t.is_deleted = 0
             AND t.coupon_type = 0
             AND t.coupon_status = 0
+            AND UNIX_TIMESTAMP(coupon_end_time) >= UNIX_TIMESTAMP(NOW())
         </where>
     </select>
     <select id="selectByIds" resultMap="BaseResultMap">
@@ -320,7 +321,8 @@
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_coupon
         where is_deleted = 0 and coupon_type = 1
-        and coupon_start_time <![CDATA[ < ]]> now()
-        and coupon_end_time <![CDATA[ > ]]> now()
+        and unix_timestamp(coupon_end_time) >UNIX_TIMESTAMP(NOW())
+        /*and coupon_start_time <![CDATA[ < ]]> now()
+        and coupon_end_time <![CDATA[ > ]]> now()*/
     </select>
 </mapper>

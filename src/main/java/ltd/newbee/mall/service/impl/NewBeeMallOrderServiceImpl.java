@@ -404,6 +404,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         try{
             insertOrder(newBeeMallOrder);
         }catch (Exception e){
+            e.printStackTrace();
             NewBeeMallException.fail(ServiceResultEnum.INSERT_ORDER_FAIL.getResult());
         }
 //        if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) <= 0) {
@@ -818,7 +819,9 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             redisCache.setCacheObject(Constants.ORDER_ID_COUNT, newOrderCount + 1);
             orderId = newOrderCount + 1;
         }else{
-            Long newOrderCount = (Long) redisCache.getCacheObject(Constants.ORDER_ID_COUNT);
+            int num = redisCache.getCacheObject(Constants.ORDER_ID_COUNT);
+            long n = num;
+            Long newOrderCount = n;
             orderId = newOrderCount + 1;
             redisCache.setCacheObject(Constants.ORDER_ID_COUNT, orderId);
         }

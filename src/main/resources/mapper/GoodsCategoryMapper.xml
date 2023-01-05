@@ -209,4 +209,19 @@
       update_user = #{updateUser,jdbcType=INTEGER}
     where category_id = #{categoryId,jdbcType=BIGINT}
   </update>
+
+    <select id="getCategoryIdByParentId" resultType="java.lang.Long">
+        select category_id
+        from tb_newbee_mall_goods_category
+        where parent_id = #{parentId}
+    </select>
+    <select id="getCategoryIdByParentIds" resultType="java.lang.Long">
+        select category_id
+        from tb_newbee_mall_goods_category
+        where parent_id in
+        <foreach item="parentId" collection="parentIds" open="(" separator="," close=")">
+            #{parentId,jdbcType=BIGINT}
+        </foreach>
+    </select>
+
 </mapper>

@@ -1,27 +1,17 @@
 package ltd.newbee.mall.service.impl;
 
-import ltd.newbee.mall.common.NewBeeMallException;
-import ltd.newbee.mall.controller.vo.NewBeeMallCouponVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
+
+import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.dao.NewBeeMallCouponMapper;
-import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
-import ltd.newbee.mall.dao.NewBeeMallUserCouponRecordMapper;
 import ltd.newbee.mall.entity.NewBeeMallCoupon;
-import ltd.newbee.mall.entity.NewBeeMallGoods;
-import ltd.newbee.mall.entity.NewBeeMallUserCouponRecord;
 import ltd.newbee.mall.service.NewBeeMallCouponService;
-import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
@@ -30,10 +20,7 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
     private NewBeeMallCouponMapper newBeeMallCouponMapper;
 
     @Autowired
-    private NewBeeMallUserCouponRecordMapper newBeeMallUserCouponRecordMapper;
-
-    @Autowired
-    private NewBeeMallGoodsMapper newBeeMallGoodsMapper;
+    private GoodsCategoryMapper goodsCategoryMapper;
 
     @Override
     public PageResult getCouponPage(PageQueryUtil pageUtil) {
@@ -42,13 +29,68 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         return new PageResult(carousels, total, pageUtil.getLimit(), pageUtil.getPage());
     }
 
+    /**
+     * 新增优惠券
+     * @param newBeeMallCoupon
+     * @return
+     */
     @Override
     public boolean saveCoupon(NewBeeMallCoupon newBeeMallCoupon) {
+        //根据goodsType 决定 goodsValue的存储
+        Byte goodsType = newBeeMallCoupon.getGoodsType();
+        //goodsValue 可能为一个或多个，使用逗号分隔。(中英文都匹配)
+        String[] goodsValues = newBeeMallCoupon.getGoodsValue().split("[，"+"\\"+",]");
+
+        //判断是否为空
+        if(goodsValues.length <= 0){
+            return false;
+        }
+        // 全品类通用
+
+        //指定类别或商品可用
+        //指定某一类商品/某种商品可用可用
+        StringBuffer gvalue = new StringBuffer();
+        if(goodsValues.length == 1){
+            gvalue.append(goodsValues[0]+",");
+            if(goodsType == 1){
+                Long[] categoryIds = goodsCategoryMapper.getCategoryIdByParentId(Long.parseLong(goodsValues[0]));
+                if(categoryIds.length > 0){
+                    for (int i = 0; i < categoryIds.length; i++) {
+                        if (i < categoryIds.length-1){
+                            gvalue.append(categoryIds[i]+",");
+                        }else {
+                            gvalue.append(categoryIds[i]);
+                        }
+                    }
+                }
+            }
+            newBeeMallCoupon.setGoodsValue(gvalue.toString());
+        }
+        //指定多个种类商品 通用优惠券
+        List<Long> cateGoryParentIds = new ArrayList();
+        if(goodsValues.length > 1){
+            for (int i = 0; i < goodsValues.length; i++) {
+                gvalue.append(goodsValues[i]+",");
+                cateGoryParentIds.add(Long.parseLong(goodsValues[i]));
+            }
+            if(goodsType == 1){
+                Long[] categoryIds = goodsCategoryMapper.getCategoryIdByParentIds(cateGoryParentIds);
+                for (int i = 0; i < categoryIds.length; i++) {
+                    if(i < categoryIds.length-1){
+                        gvalue.append(categoryIds[i]+",");
+                    }else {
+                        gvalue.append(categoryIds[i]);
+                    }
+                }
+            }
+            newBeeMallCoupon.setGoodsValue(gvalue.toString());
+        }
         return newBeeMallCouponMapper.insertSelective(newBeeMallCoupon) > 0;
     }
 
     @Override
     public boolean updateCoupon(NewBeeMallCoupon newBeeMallCoupon) {
+
         return newBeeMallCouponMapper.updateByPrimaryKeySelective(newBeeMallCoupon) > 0;
     }
 
@@ -62,149 +104,4 @@ public class NewBeeMallCouponServiceImpl implements NewBeeMallCouponService {
         return newBeeMallCouponMapper.deleteByPrimaryKey(id) > 0;
     }
 
-    @Override
-    public List<NewBeeMallCouponVO> selectAvailableCoupon(Long userId) {
-        List<NewBeeMallCoupon> coupons = newBeeMallCouponMapper.selectAvailableCoupon();
-        List<NewBeeMallCouponVO> couponVOS = BeanUtil.copyList(coupons, NewBeeMallCouponVO.class);
-        for (NewBeeMallCouponVO couponVO : couponVOS) {
-            if (userId != null) {
-                int num = newBeeMallUserCouponRecordMapper.getUserCouponCount(userId, couponVO.getCouponId());
-                if (num > 0) {
-                    couponVO.setHasReceived(true);
-                }
-            }
-            if (couponVO.getCouponTotal() != 0) {
-                int count = newBeeMallUserCouponRecordMapper.getCouponCount(couponVO.getCouponId());
-                if (count >= couponVO.getCouponTotal()) {
-                    couponVO.setSaleOut(true);
-                }
-            }
-        }
-        return couponVOS;
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean saveCouponUser(Long couponId, Long userId) {
-        NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponId);
-        if (newBeeMallCoupon.getCouponLimit() != 0) {
-            int num = newBeeMallUserCouponRecordMapper.getUserCouponCount(userId, couponId);
-            if (num != 0) {
-                throw new NewBeeMallException("优惠券已经领过了,无法再次领取！");
-            }
-        }
-        if (newBeeMallCoupon.getCouponTotal() != 0) {
-            int count = newBeeMallUserCouponRecordMapper.getCouponCount(couponId);
-            if (count >= newBeeMallCoupon.getCouponTotal()) {
-                throw new NewBeeMallException("优惠券已经领完了！");
-            }
-            if (newBeeMallCouponMapper.reduceCouponTotal(couponId) <= 0) {
-                throw new NewBeeMallException("优惠券领取失败！");
-            }
-        }
-        NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
-        couponUser.setUserId(userId);
-        couponUser.setCouponId(couponId);
-        return newBeeMallUserCouponRecordMapper.insertSelective(couponUser) > 0;
-    }
-
-    @Override
-    public List<NewBeeMallCouponVO> selectMyCoupons(Long userId) {
-        List<NewBeeMallUserCouponRecord> coupons = newBeeMallUserCouponRecordMapper.selectMyCoupons(userId);
-        List<NewBeeMallCouponVO> couponVOS = new ArrayList<>();
-        for (NewBeeMallUserCouponRecord couponUser : coupons) {
-            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
-            if (newBeeMallCoupon == null) {
-                continue;
-            }
-            NewBeeMallCouponVO newBeeMallCouponVO = new NewBeeMallCouponVO();
-            BeanUtil.copyProperties(newBeeMallCoupon, newBeeMallCouponVO);
-            newBeeMallCouponVO.setCouponUserId(couponUser.getCouponUserId());
-            newBeeMallCouponVO.setUsed(couponUser.getUsedTime() != null);
-            couponVOS.add(newBeeMallCouponVO);
-        }
-        return couponVOS;
-    }
-
-    @Override
-    public List<NewBeeMallMyCouponVO> selectOrderCanUseCoupons(List<NewBeeMallShoppingCartItemVO> myShoppingCartItems, int priceTotal, Long userId) {
-        List<NewBeeMallUserCouponRecord> couponUsers = newBeeMallUserCouponRecordMapper.selectMyAvailableCoupons(userId);
-        List<NewBeeMallMyCouponVO> myCouponVOS = BeanUtil.copyList(couponUsers, NewBeeMallMyCouponVO.class);
-        List<Long> couponIds = couponUsers.stream().map(NewBeeMallUserCouponRecord::getCouponId).collect(Collectors.toList());
-        if (!couponIds.isEmpty()) {
-            ZoneId zone = ZoneId.systemDefault();
-            List<NewBeeMallCoupon> coupons = newBeeMallCouponMapper.selectByIds(couponIds);
-            for (NewBeeMallCoupon coupon : coupons) {
-                for (NewBeeMallMyCouponVO myCouponVO : myCouponVOS) {
-                    if (coupon.getCouponId().equals(myCouponVO.getCouponId())) {
-                        myCouponVO.setName(coupon.getCouponName());
-                        myCouponVO.setCouponDesc(coupon.getCouponDesc());
-                        myCouponVO.setDiscount(coupon.getDiscount());
-                        myCouponVO.setMin(coupon.getMin());
-                        myCouponVO.setGoodsType(coupon.getGoodsType());
-                        myCouponVO.setGoodsValue(coupon.getGoodsValue());
-                        ZonedDateTime startZonedDateTime = coupon.getCouponStartTime().atStartOfDay(zone);
-                        ZonedDateTime endZonedDateTime = coupon.getCouponEndTime().atStartOfDay(zone);
-                        myCouponVO.setStartTime(Date.from(startZonedDateTime.toInstant()));
-                        myCouponVO.setEndTime(Date.from(endZonedDateTime.toInstant()));
-                    }
-                }
-            }
-        }
-        long nowTime = System.currentTimeMillis();
-        return myCouponVOS.stream().filter(item -> {
-            // 判断有效期
-            Date startTime = item.getStartTime();
-            Date endTime = item.getEndTime();
-            if (startTime == null || endTime == null || nowTime < startTime.getTime() || nowTime > endTime.getTime()) {
-                return false;
-            }
-            // 判断使用条件
-            boolean b = false;
-            if (item.getMin() <= priceTotal) {
-                if (item.getGoodsType() == 1) { // 指定分类可用
-                    String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).collect(Collectors.toList());
-                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).collect(Collectors.toList());
-                    List<NewBeeMallGoods> goods = newBeeMallGoodsMapper.selectByPrimaryKeys(goodsIds);
-                    List<Long> categoryIds = goods.stream().map(NewBeeMallGoods::getGoodsCategoryId).collect(Collectors.toList());
-                    for (Long categoryId : categoryIds) {
-                        if (goodsValue.contains(categoryId)) {
-                            b = true;
-                            break;
-                        }
-                    }
-                } else if (item.getGoodsType() == 2) { // 指定商品可用
-                    String[] split = item.getGoodsValue().split(",");
-                    List<Long> goodsValue = Arrays.stream(split).map(Long::valueOf).toList();
-                    List<Long> goodsIds = myShoppingCartItems.stream().map(NewBeeMallShoppingCartItemVO::getGoodsId).toList();
-                    for (Long goodsId : goodsIds) {
-                        if (goodsValue.contains(goodsId)) {
-                            b = true;
-                            break;
-                        }
-                    }
-                } else { // 全场通用
-                    b = true;
-                }
-            }
-            return b;
-        }).sorted(Comparator.comparingInt(NewBeeMallMyCouponVO::getDiscount)).collect(Collectors.toList());
-    }
-
-    @Override
-    public boolean deleteCouponUser(Long couponUserId) {
-        return newBeeMallUserCouponRecordMapper.deleteByPrimaryKey(couponUserId) > 0;
-    }
-
-    @Override
-    public void releaseCoupon(Long orderId) {
-        NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.getUserCouponByOrderId(orderId);
-        if (newBeeMallUserCouponRecord == null) {
-            return;
-        }
-        newBeeMallUserCouponRecord.setUseStatus((byte) 0);
-        newBeeMallUserCouponRecord.setUpdateTime(new Date());
-        newBeeMallUserCouponRecordMapper.updateByPrimaryKey(newBeeMallUserCouponRecord);
-    }
 }

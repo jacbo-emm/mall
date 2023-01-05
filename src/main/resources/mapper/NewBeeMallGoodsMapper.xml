@@ -387,5 +387,13 @@
             update_time       = #{updateTime,jdbcType=TIMESTAMP}
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
-
+    <!--根据goodId查询goodCategoryId-->
+    <select id="selectCategoryIdByGoodId" resultType="java.lang.Long">
+        select goods_category_id
+        from tb_newbee_mall_goods_info
+        where goods_id in
+        <foreach item="goodsId" collection="list" open="(" separator="," close=")">
+            #{goodsId}
+        </foreach>
+    </select>
 </mapper>

@@ -5,14 +5,12 @@ import ltd.newbee.mall.common.NewBeeMallException;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.entity.MallUser;
-import ltd.newbee.mall.service.NewBeeMallCouponService;
 import ltd.newbee.mall.service.NewBeeMallUserService;
 import ltd.newbee.mall.util.HttpUtil;
 import ltd.newbee.mall.util.MD5Util;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,9 +23,6 @@ public class PersonalController {
 
     @Resource
     private NewBeeMallUserService newBeeMallUserService;
-
-    @Autowired
-    private NewBeeMallCouponService newBeeMallCouponService;
 
     @GetMapping("/personal")
     public String personalPage(HttpServletRequest request,
