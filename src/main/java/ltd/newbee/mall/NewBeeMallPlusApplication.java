@@ -68,7 +68,6 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
         Calendar c = Calendar.getInstance();
         for(NewBeeMallOrder order : orders){
             c.setTime(order.getCreateTime());
-            c.add(Calendar.MINUTE, 30);
             //已支付
             if(order.getOrderStatus() == 1){
                 c.add(Calendar.DAY_OF_YEAR, 15);
