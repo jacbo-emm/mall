@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 @Controller
@@ -29,7 +30,7 @@ public class GoodsController {
     private NewBeeMallCategoryService newBeeMallCategoryService;
 
     @GetMapping({"/search", "/search.html"})
-    public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) {
+    public String searchPage(@RequestParam Map<String, Object> params, HttpServletRequest request) throws IOException {
         if (StringUtils.isEmpty((CharSequence) params.get("page"))) {
             params.put("page", 1);
         }
@@ -58,7 +59,7 @@ public class GoodsController {
         params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("pageResult", newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil));
+        request.setAttribute("pageResult", newBeeMallGoodsService.searchNewBeeMallGoods(pageUtil, keyword));
         return "mall/search";
     }
 

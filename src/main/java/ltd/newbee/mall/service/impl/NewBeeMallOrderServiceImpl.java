@@ -206,7 +206,8 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             if (StringUtils.isEmpty(errorOrderNos.toString())) {
                 Date d = new Date();
                 // 订单状态正常 可以执行配货完成操作 修改订单状态和更新时间
-                if (newBeeMallOrderMapper.checkDone(Arrays.asList(ids), d) > 0) {
+                int row = newBeeMallOrderMapper.checkDone(Arrays.asList(ids), d);
+                if (row > 0 && row == orders.size()) {
                     for(NewBeeMallOrder order : orders){
                         updateOrderStatusInRedis(d, order, (byte) NewBeeMallOrderStatusEnum.ORDER_PACKAGED.getOrderStatus(), 10l, TimeUnit.DAYS);
                     }
@@ -247,7 +248,8 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             if (StringUtils.isEmpty(errorOrderNos.toString())) {
                 // 订单状态正常 可以执行出库操作 修改订单状态和更新时间
                 Date d = new Date();
-                if (newBeeMallOrderMapper.checkOut(Arrays.asList(ids), d) > 0) {
+                int row = newBeeMallOrderMapper.checkOut(Arrays.asList(ids), d);
+                if (row > 0 && row == orders.size()) {
                     for(NewBeeMallOrder order : orders){
                         updateOrderStatusInRedis(d, order, (byte) NewBeeMallOrderStatusEnum.ORDER_EXPRESS.getOrderStatus(), 30l, TimeUnit.DAYS);
                     }
@@ -519,7 +521,8 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 // 订单状态正常 可以执行关闭操作 修改订单状态和更新时间
                 //以后端项目时间为准
                 Date d = new Date();
-                if (newBeeMallOrderMapper.closeOrder(Arrays.asList(ids), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus(), d) > 0) {
+                int row = newBeeMallOrderMapper.closeOrder(Arrays.asList(ids), NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_JUDGE.getOrderStatus(), d);
+                if (row > 0 && row == orders.size()) {
                     //修改redis中的订单信息
                     for(NewBeeMallOrder order : orders){
                         //商户取消已支付订单则进行全额退款标记
