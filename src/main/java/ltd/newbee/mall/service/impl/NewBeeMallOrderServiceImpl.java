@@ -241,7 +241,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                     errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                     continue;
                 }
-                if (newBeeMallOrder.getOrderStatus() != 2) {
+                if (newBeeMallOrder.getOrderStatus() != 1 && newBeeMallOrder.getOrderStatus() != 2) {
                     errorOrderNos.append(newBeeMallOrder.getOrderNo()).append(" ");
                 }
             }
