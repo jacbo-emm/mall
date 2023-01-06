@@ -22,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -35,6 +37,13 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
     public static void main(String[] args) {
         SpringApplication.run(NewBeeMallPlusApplication.class, args);
     }
+
+//    /* 设置Web项目的启动入口 */
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//        return builder.sources(NewBeeMallPlusApplication.class);
+//    }
+
 
     @Autowired
     private RedisCache redisCache;

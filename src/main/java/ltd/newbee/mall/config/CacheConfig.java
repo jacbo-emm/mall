@@ -29,8 +29,7 @@ import java.time.Duration;
 @Configuration
 public class CacheConfig extends CachingConfigurerSupport {
 
-    @Value("${spring.redis.expire}")
-    private int expire = 0;
+    private int expire = 400;
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {

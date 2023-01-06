@@ -3,14 +3,12 @@ package ltd.newbee.mall.controller.mall;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.controller.vo.NewBeeMallCouponVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
-import ltd.newbee.mall.service.NewBeeMallCouponService;
 import ltd.newbee.mall.service.NewBeeMallUserCouponService;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
