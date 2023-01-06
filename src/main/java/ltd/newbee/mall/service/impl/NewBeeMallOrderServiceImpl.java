@@ -574,11 +574,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
                 //用户取消已支付订单则进行全额退款标记
                 if(newBeeMallOrder.getOrderStatus() == 1 && alipayRefundRecordMapper.selectByOrderNo(newBeeMallOrder.getOrderNo()) == null){
                     //若为已支付订单则生成退款标记
-                    try {
-                        refund(newBeeMallOrder.getOrderNo(), null);
-                    }catch (Exception e){
-                        return ServiceResultEnum.REFUND_GEN_FAIL.getResult();
-                    }
+                    refund(newBeeMallOrder.getOrderNo(), null);
                 }
                 updateOrderStatusInRedis(d, newBeeMallOrder, (byte) NewBeeMallOrderStatusEnum.ORDER_CLOSED_BY_MALLUSER.getOrderStatus(), 86400l * 2 + ((long) Math.random() * 36001), TimeUnit.SECONDS);
                 return ServiceResultEnum.SUCCESS.getResult();
@@ -699,11 +695,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         //生成退款记录
         if(newBeeMallOrder.getOrderStatus() == 1){
             //若为已支付订单则生成退款标记
-            try {
-                refund(newBeeMallOrder.getOrderNo(), null);
-            }catch (Exception e){
-                return ServiceResultEnum.REFUND_GEN_FAIL.getResult();
-            }
+            refund(newBeeMallOrder.getOrderNo(), null);
         }
 
         // 未支付订单改为已支付订单
