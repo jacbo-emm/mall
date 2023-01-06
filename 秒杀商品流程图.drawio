@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-01-06T08:24:05.089Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="lONodYETemgDvfhcUL_D" version="20.8.1" type="github">
+<mxfile host="app.diagrams.net" modified="2023-01-06T11:16:02.870Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.54" etag="nhzngZmfv16_VkY9iP45" version="20.8.1" type="github">
   <diagram id="SfYL227m2gQ5KlGTOzU7" name="第 1 页">
     <mxGraphModel dx="956" dy="553" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="3300" pageHeight="4681" math="0" shadow="0">
       <root>
@@ -172,7 +172,7 @@
             <mxPoint x="1170" y="120" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="YPRQtxpP1fX91p9yAM5o-2" value="以恒定的书读生成令牌" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+        <mxCell id="YPRQtxpP1fX91p9yAM5o-2" value="以恒定的速度生成令牌" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
           <mxGeometry x="1050" y="80" width="140" height="30" as="geometry" />
         </mxCell>
         <mxCell id="YPRQtxpP1fX91p9yAM5o-3" value="桶是否满？" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.decision;whiteSpace=wrap;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
