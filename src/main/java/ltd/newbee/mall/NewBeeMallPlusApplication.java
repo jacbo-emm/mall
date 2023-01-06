@@ -69,9 +69,10 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
         for(NewBeeMallOrder order : orders){
             c.setTime(order.getCreateTime());
             c.add(Calendar.MINUTE, 30);
-            if(c.getTime().getTime() < d.getTime()){
-                //已支付
-                if(order.getOrderStatus() == 1){
+            //已支付
+            if(order.getOrderStatus() == 1){
+                c.add(Calendar.DAY_OF_YEAR, 15);
+                if(c.getTime().getTime() < d.getTime()){
                     if(alipayRefundRecordService.selectByOrderNo(order.getOrderNo()) == null){
                         //超时退款标记
                         newBeeMallOrderService.refund(order.getOrderNo(), null);
@@ -79,8 +80,11 @@ public class NewBeeMallPlusApplication implements CommandLineRunner {
                     orderIds.add(order.getOrderId());
                     redisCache.deleteObject(getPayKey(order));
                 }
-                //未支付
-                else if(order.getOrderStatus() == 0){
+            }
+            //未支付
+            else if(order.getOrderStatus() == 0){
+                c.add(Calendar.MINUTE, 30);
+                if(c.getTime().getTime() < d.getTime()){
                     orderIds.add(order.getOrderId());
                     redisCache.deleteObject(getPayKey(order));
                 }
